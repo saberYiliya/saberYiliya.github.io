@@ -103,5 +103,5 @@ theme: landscape
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/saberYiliya/MrCaiBlog.git   # 在Gitee仓库复制的链接
+  repository: https://github.com/saberYiliya/saberYiliya.github.io.git   # 在Gitee仓库复制的链接
   branch: master
