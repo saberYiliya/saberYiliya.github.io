@@ -8,36 +8,22 @@ categories: ES6
 
 实现一个api最重要的是要详细了解这个api的功能,所以在实现之前我们需要简单的回顾一下
 ### Promise.resolve
-1. 返回值始终是一个Promise对象，状态处于fulfilled
+1. 返回值始终是一个Promise对象
 2. 如果这个值是 thenable（即带有 "then" 方法），返回的 promise 会“跟随”这个 thenable 的对象
 
-
-## 话不多说直接上代码
-核心代码
 ```ts
-class Pubsub {
-  events: any
-  constructor() {
+//非Promise对象，非thenable对象
+let promise = Promise.resolve({a:1})
+promise.then(console.log)//{a: 1}
 
-    // 事件中心
-    // 每种事件(任务)下存放其订阅者的回调函数
-    this.events = {}
-  }
-  // 订阅方法
-  subscribe(type: string, cb: Function) {
-    if (!this.events[type]) {
-      this.events[type] = [];
-    }
-    this.events[type].push(cb);
-  }
-  // 发布方法
-  publish(type: string, arg: any) {
-    if (this.events[type]) {
-      this.events[type].forEach((cb: Function) => cb(arg))
-    }
-  }
-}
+//Promise对象成功状态
+promise = Promise.resolve(Promise.resolve(2)) // 2
+promise.then(console.log)//{a: 1}
 
+////Promise对象失败状态
+promise = Promise.resolve(Promise.reject(2)); // 2
+console.log(promise) //状态rejected
+promise.catch(console.error) //2
 ```
 由此可以发布订阅模式其实就是触发相关的回调其实是一个很容易理解的设计模式
 我门在vue，react中使用这个方式来实现组件emit事件也是可以行，不过为了维护等方面的问题，不建议在实际项目中使用
